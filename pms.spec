@@ -11,6 +11,7 @@ License: MPL
 Source: %{name}-%{version}.tar.bz2
 URL: http://wissrech.iam.uni-bonn.de/people/garcke/pms/
 Group: Communications
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires: sendmail gnome-pilot
 BuildRequires: pilot-link-devel openssl-devel gnome-pilot-devel pam-devel
 BuildRequires:	bison

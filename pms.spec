@@ -12,7 +12,7 @@ Source: %{name}-%{version}.tar.bz2
 URL: http://wissrech.iam.uni-bonn.de/people/garcke/pms/
 Group: Communications
 Requires: sendmail gnome-pilot
-BuildPrereq: pilot-link-devel openssl-devel gnome-pilot-devel pam-devel
+BuildRequires: pilot-link-devel openssl-devel gnome-pilot-devel pam-devel
 BuildRequires:	bison
 
 %description

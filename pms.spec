@@ -1,6 +1,6 @@
 %define name pilot-mailsync
 %define version 0.9.2
-%define release %mkrel 1
+%define release %mkrel 2
 
 
 Summary: Email synchronization program to/from the Palm OS

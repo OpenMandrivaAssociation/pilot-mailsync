@@ -1,15 +1,14 @@
-%define name pilot-mailsync
-%define version 0.9.2
-%define release %mkrel 2
-
-
 Summary:	Email synchronization program to/from the Palm OS
 Name:		pilot-mailsync
 Version:	0.9.2
 Release:	%{mkrel 2}
 License:	MPLv1.0
 Source0:	http://www.garcke.de/PMS/%{name}-%{version}.tar.bz2
+# Work around a build problem caused by some includes issues
+# - AdamW 2008/09
 Patch0:		pilot-mailsync-0.9.2-configh.patch
+# Look for libs in /usr/lib64 as well as /usr/lib - AdamW 2008/09
+Patch1:		pilot-mailsync-0.9.2-lib64.patch
 URL:		http://www.garcke.de/PMS/
 Group:		Communications
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -18,6 +17,7 @@ Requires:	gnome-pilot
 BuildRequires:	pilot-link-devel
 BuildRequires:	openssl-devel
 BuildRequires:	gnome-pilot-devel
+BuildRequires:	gnome-devel
 BuildRequires:	pam-devel
 BuildRequires:	bison
 
@@ -29,9 +29,13 @@ installed by pilot-link.
 %prep
 %setup -q
 %patch0 -p1 -b .configh
+%patch1 -p1 -b .lib64
 
 %build
+autoconf
 sed -i -e 's,-DHAVE_CONFIG_H,,g' configure
+export CFLAGS="$CFLAGS -fPIC"
+export CPPFLAGS="$CPPFLAGS -fPIC"
 %configure2_5x --enable-gpilot
 make
 

@@ -20,6 +20,7 @@ BuildRequires:	gnome-pilot-devel
 BuildRequires:	gnome-devel
 BuildRequires:	pam-devel
 BuildRequires:	bison
+BuildRequires:	libtool
 
 %description
 Pilot-Mailsync is an application to transfer outgoing mail from and deliver

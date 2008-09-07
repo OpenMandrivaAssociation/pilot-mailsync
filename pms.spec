@@ -3,17 +3,22 @@
 %define release %mkrel 2
 
 
-Summary: Email synchronization program to/from the Palm OS
-Name: %{name}
-Version: %{version}
-Release: %{release}
-License: MPL
-Source: %{name}-%{version}.tar.bz2
-URL: http://wissrech.iam.uni-bonn.de/people/garcke/pms/
-Group: Communications
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Requires: sendmail gnome-pilot
-BuildRequires: pilot-link-devel openssl-devel gnome-pilot-devel pam-devel
+Summary:	Email synchronization program to/from the Palm OS
+Name:		pilot-mailsync
+Version:	0.9.2
+Release:	%{mkrel 2}
+License:	MPLv1.0
+Source0:	http://www.garcke.de/PMS/%{name}-%{version}.tar.bz2
+Patch0:		pilot-mailsync-0.9.2-configh.patch
+URL:		http://www.garcke.de/PMS/
+Group:		Communications
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+Requires:	sendmail-command
+Requires:	gnome-pilot
+BuildRequires:	pilot-link-devel
+BuildRequires:	openssl-devel
+BuildRequires:	gnome-pilot-devel
+BuildRequires:	pam-devel
 BuildRequires:	bison
 
 %description
@@ -22,30 +27,25 @@ incoming mail to a Palm OS device. pilot-mailsync relies on the libraries
 installed by pilot-link.
 
 %prep
-
-%setup
+%setup -q
+%patch0 -p1 -b .configh
 
 %build
-
-./configure --enable-gpilot
-
+sed -i -e 's,-DHAVE_CONFIG_H,,g' configure
+%configure2_5x --enable-gpilot
 make
 
 %install
+rm -rf %{buildroot}
 
 # Create installation root folders
-rm -rf $RPM_BUILD_ROOT
-RPM_DOC_ROOT=$RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-rm -rf $RPM_DOC_ROOT
-mkdir -p $RPM_DOC_ROOT
+mkdir -p %{buildroot}%{_libdir}/gnome-pilot/conduits/
+mkdir -p %{buildroot}%{_datadir}/gnome-pilot/conduits/
 
-mkdir -p $RPM_BUILD_ROOT%_libdir/gnome-pilot/conduits/
-mkdir -p $RPM_BUILD_ROOT%_datadir/gnome-pilot/conduits/
+make prefix=%{buildroot}%{_prefix} \
+	GNOMEPILOTCONDUITDIR=%{buildroot}%{_libdir}/gnome-pilot/conduits/ gplugin_install
 
-make prefix=$RPM_BUILD_ROOT%{_prefix} \
-	GNOMEPILOTCONDUITDIR=$RPM_BUILD_ROOT%_libdir/gnome-pilot/conduits/ gplugin_install
-
-install -m 644 mailsync.conduit $RPM_BUILD_ROOT%_datadir/gnome-pilot/conduits/
+install -m 644 mailsync.conduit %{buildroot}%{_datadir}/gnome-pilot/conduits/
 
 %files
 %defattr(-,root,root)
@@ -55,5 +55,5 @@ install -m 644 mailsync.conduit $RPM_BUILD_ROOT%_datadir/gnome-pilot/conduits/
 %doc README INSTALL docs/*
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 

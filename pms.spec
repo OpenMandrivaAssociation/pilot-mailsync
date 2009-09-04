@@ -1,7 +1,7 @@
 Summary:	Email synchronization program to/from the Palm OS
 Name:		pilot-mailsync
 Version:	0.9.2
-Release:	%{mkrel 2}
+Release:	%{mkrel 3}
 License:	MPLv1.0
 Source0:	http://www.garcke.de/PMS/%{name}-%{version}.tar.bz2
 # Work around a build problem caused by some includes issues

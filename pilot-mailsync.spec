@@ -17,7 +17,6 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires:	sendmail-command
 Requires:	gnome-pilot
 BuildRequires:	gnome-pilot-devel
-BuildRequires:	c-client-devel
 BuildRequires:	pam-devel
 BuildRequires:	bison
 BuildRequires:	libtool

@@ -1,7 +1,7 @@
 Summary:	Email synchronization program to/from the Palm OS
 Name:		pilot-mailsync
 Version:	0.9.2
-Release:	%{mkrel 3}
+Release:	%{mkrel 4}
 License:	MPLv1.0
 Source0:	http://www.garcke.de/PMS/%{name}-%{version}.tar.bz2
 # Work around a build problem caused by some includes issues
@@ -9,15 +9,15 @@ Source0:	http://www.garcke.de/PMS/%{name}-%{version}.tar.bz2
 Patch0:		pilot-mailsync-0.9.2-configh.patch
 # Look for libs in /usr/lib64 as well as /usr/lib - AdamW 2008/09
 Patch1:		pilot-mailsync-0.9.2-lib64.patch
+Patch2:		pilot-mailsync-0.9.2-gnome2.patch
+Patch3:		pilot-mailsync-0.9.2-link.patch
 URL:		http://www.garcke.de/PMS/
 Group:		Communications
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires:	sendmail-command
 Requires:	gnome-pilot
-BuildRequires:	pilot-link-devel
-BuildRequires:	openssl-devel
 BuildRequires:	gnome-pilot-devel
-BuildRequires:	gnome-devel
+BuildRequires:	c-client-devel
 BuildRequires:	pam-devel
 BuildRequires:	bison
 BuildRequires:	libtool
@@ -31,13 +31,16 @@ installed by pilot-link.
 %setup -q
 %patch0 -p1 -b .configh
 %patch1 -p1 -b .lib64
+%patch2 -p0 -b .gnome2
+%patch3 -p0 -b .link
 
 %build
 autoconf
 sed -i -e 's,-DHAVE_CONFIG_H,,g' configure
 export CFLAGS="$CFLAGS -fPIC"
 export CPPFLAGS="$CPPFLAGS -fPIC"
-%configure2_5x --enable-gpilot
+%configure2_5x --enable-gpilot=yes \
+	--enable-jpilot=no
 make
 
 %install

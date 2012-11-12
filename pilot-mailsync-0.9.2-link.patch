@@ -1,0 +1,18 @@
+--- Makefile.in.link	2005-09-03 15:01:52.000000000 +0200
++++ Makefile.in	2010-04-15 08:23:08.000000000 +0200
+@@ -110,12 +110,13 @@
+ 
+ libgnome_mailsync_conduit.la: $(LOBJS) 
+ 	$(LIBTOOL) --mode=link \
+-	$(CC) $(OPTIONS) -o libgnome_mailsync_conduit.la \
++	$(CC) $(LDFLAGS) $(OPTIONS) -o libgnome_mailsync_conduit.la \
+ 	$(LOBJS) \
+ 	-rpath $(prefix)/lib/gnome-pilot/conduits \
+ 	-version-info 1:1 \
+ 	-avoid-version \
+-	-lc-client -L$(CCLIENTDIR) -lpam -lssl
++	$(GNOMEPILOTLIBS) \
++	-lc-client -L$(CCLIENTDIR) -lpam -lssl -lcrypto
+ 
+ gplugin_install:
+ 	$(INSTALL) -d -m 755 $(GNOMEPILOTCONFIGDIR); \

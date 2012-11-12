@@ -1,0 +1,20 @@
+--- pilot-mailsync-0.9.2/configure.in	2005-11-08 19:32:08.000000000 -0800
++++ pilot-mailsync-0.9.2/configure.in.new	2008-09-07 10:21:10.000000000 -0700
+@@ -98,7 +98,7 @@
+ # but where?)
+ # XXX is this really needed? maybe just use headers' directory (- "/include")
+ AC_MSG_CHECKING([for pilot-link libraries])
+-find_libloc "pisock" "$pilotlink_loc/lib /lib /usr/lib /usr/local/lib"
++find_libloc "pisock" "$pilotlink_loc/lib /lib /usr/lib /usr/lib64 /usr/local/lib"
+ if test -z "$foundloc" ; then
+ 	AC_MSG_ERROR([
+ 
+@@ -122,7 +122,7 @@
+ 	# they want SSL; find it
+ 	AC_MSG_CHECKING([for OpenSSL libraries])
+ 
+-	find_libloc "ssl" "/lib /usr/lib /usr/lib/openssl /usr/local/lib /usr/local/openssl/lib"
++	find_libloc "ssl" "/lib /usr/lib /usr/lib64 /usr/lib/openssl /usr/local/lib /usr/local/openssl/lib"
+ 	ssl_libloc=$foundloc
+ 
+ 	if test -n "$ssl_libloc" ; then

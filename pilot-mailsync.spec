@@ -11,7 +11,7 @@ Patch0:		pilot-mailsync-0.9.2-configh.patch
 Patch1:		pilot-mailsync-0.9.2-lib64.patch
 Patch2:		pilot-mailsync-0.9.2-gnome2.patch
 Patch3:		pilot-mailsync-0.9.2-link.patch
-URL:		http://www.garcke.de/PMS/
+URL:		https://www.garcke.de/PMS/
 Group:		Communications
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires:	sendmail-command
